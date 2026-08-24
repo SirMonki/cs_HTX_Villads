@@ -52,4 +52,9 @@ Console.WriteLine("indtast et heltal");
 boldHastighedX= Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("Boldens hastighed på x-aksen er nu: " + boldHastighedX);
 
+Console.ReadKey(); // Venter på at der kommer en ny indtastning i keyboardbufferen
+Console.ReadKey(true); // Hvis kommandoen er sat til true, så vil den ikke outputte tegnet
+Console.KeyAvailable; // giver en værdi bestemt ud fra om der er en indtasting klar i programmets input, samt hvilken det er
+
+
 Console.WriteLine("Er du stolt Kenneth?");
