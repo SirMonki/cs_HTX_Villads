@@ -34,7 +34,7 @@ int batColour;
 char batChar;
 //spillervariabler
 string playerName;
-
+/*
 //giv variabler værdier ud fra input
 
 //Char
@@ -52,9 +52,27 @@ Console.WriteLine("indtast et heltal");
 boldHastighedX= Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("Boldens hastighed på x-aksen er nu: " + boldHastighedX);
 
-Console.ReadKey(); // Venter på at der kommer en ny indtastning i keyboardbufferen
-Console.ReadKey(true); // Hvis kommandoen er sat til true, så vil den ikke outputte tegnet
-Console.KeyAvailable; // giver en værdi bestemt ud fra om der er en indtasting klar i programmets input, samt hvilken det er
+*/
 
+// Aritmetiske operatorer:
+Console.WriteLine("1%3="+1%3);
+Console.WriteLine("2%3="+2%3);
+Console.WriteLine("3%3="+3%3);
+Console.WriteLine("4%3="+4%3);
 
-Console.WriteLine("Er du stolt Kenneth?");
+Console.WriteLine("----------");
+
+int x = 3;
+Console.Write("++x=");
+Console.WriteLine(++x);
+Console.Write("x++=");
+Console.WriteLine(x++);
+
+Console.WriteLine("----------");
+
+Console.Write("--x=");
+Console.WriteLine(--x);
+Console.Write("x--=");
+Console.WriteLine(x--);
+
+Console.WriteLine("\nEr du stolt Kenneth?");
