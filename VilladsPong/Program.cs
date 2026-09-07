@@ -20,13 +20,13 @@ int boldHastighedY;
 char boldChar;
 int boldColour;
 //banevariabler
-int baneX;
-int baneY;
-int baneHeight;
-int baneWidth;
-int baneColour;
-int baneOpening;
-char baneChar;
+int laneX;
+int laneY;
+int laneHeight;
+int laneWidth;
+int laneColour;
+int laneOpening;
+char laneChar;
 //batvariabler
 int batX;
 int batY;
@@ -34,68 +34,45 @@ int batColour;
 char batChar;
 //spillervariabler
 string playerName;
-
+/*
 //giv variabler værdier ud fra input
+
+//Char
+Console.WriteLine("Indtast et tegn");
+batChar = Convert.ToChar(Console.ReadLine());
+Console.WriteLine("batChar er nu:" + batChar);
 
 //String
 Console.WriteLine("Indtast dit navn");
 playerName = Console.ReadLine();
 Console.WriteLine("Du hedder: " + playerName);
 
-//initialisering
-baneHeight = 25;
-baneWidth = 100;
-baneChar = '#';
+//Int
+Console.WriteLine("indtast et heltal");
+boldHastighedX= Convert.ToInt32(Console.ReadLine());
+Console.WriteLine("Boldens hastighed på x-aksen er nu: " + boldHastighedX);
 
-batX = 2;
-batY = baneHeight/2;
-batChar = '|';
-int batHeight = 4; // hvor mange felter battet fylder lodret
+*/
 
-//Game loop
-while (true)
-{
- // Læs tastetryk
- if (Console.KeyAvailable)
- {
-  var key = Console.ReadKey(true).Key;
+// Aritmetiske operatorer:
+Console.WriteLine("1%3="+1%3);
+Console.WriteLine("2%3="+2%3);
+Console.WriteLine("3%3="+3%3);
+Console.WriteLine("4%3="+4%3);
 
-  if (key == ConsoleKey.UpArrow && batY > 1)
-  {
-   batY--;
-  }
-  else if (key == ConsoleKey.DownArrow && batY < baneHeight - 1 - batHeight)
-  {
-   batY++;
-  }
-  else if (key == ConsoleKey.Escape)
-  {
-   break;
-  }
- }
+Console.WriteLine("----------");
 
- Console.SetCursorPosition(0, 0);
-//Tegn banen
- for (int y = 0; y < baneHeight; y++)
- {
-  for (int x = 0; x < baneWidth; x++)
-  {
-   if (x == batX && y >= batY && y < batY + batHeight)
-   {
-    Console.Write(batChar);
-   }
-   else if (y == 0 || y == baneHeight - 1 || x == 0 || x == baneWidth - 1)
-   {
-    Console.Write(baneChar);
-   }
-   else
-   {
-    Console.Write(" ");
-   }
-  }
+int x = 3;
+Console.Write("++x=");
+Console.WriteLine(++x);
+Console.Write("x++=");
+Console.WriteLine(x++);
 
-  Console.WriteLine();
- }
-}
+Console.WriteLine("----------");
 
-//Console.WriteLine("\nEr du stolt Kenneth?");
+Console.Write("--x=");
+Console.WriteLine(--x);
+Console.Write("x--=");
+Console.WriteLine(x--);
+
+Console.WriteLine("\nEr du stolt Kenneth?");
