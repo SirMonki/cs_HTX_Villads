@@ -3,29 +3,55 @@
  Programbeskrivelse: En ny version af det klassiske "Pong" fra 1960'erne
  Forfatter: Villads A. S. Kragelund
 */
-//lav nye farver ud fra rgb
-String hackerGreen = "\x1b[38;2;0;255;0m";
-String hackerRed = "\x1b[38;2;255;0;0m";
-String reset = "\x1b[0m";
 
-//udskriv en linje
-Console.WriteLine($"{hackerGreen}Hello, World! My name is Mr Robbort \nWelcome to my {hackerRed}EVIL!!! {hackerGreen}pong!!!{reset}");
-Console.SetCursorPosition(6,14);
+int laneHeight = Console.WindowHeight;
+int laneWidth = Console.WindowWidth;
+int batPosY = Console.WindowHeight/2;
+int batPosX = 1;
+char batChar = '|'; 
+int batHeight = 4;
 
-Console.WriteLine("Press enter key to start the game...");
+int ballPosY =  Console.WindowHeight/2;
+int ballPosX =  Console.WindowWidth/2;
+int ballDY=1;
+int ballDX=1;
+char ballChar = '#';
 
-// Inistialisering
-var inputKey = Console.ReadKey(true).Key;
-
-while (inputKey != ConsoleKey.Enter) //While loop der tjekker efter om tasten er enter
+Console.CursorVisible = false;
+while (true)
 {
- inputKey = Console.ReadKey(true).Key; // Lyt efter input
- if (inputKey == ConsoleKey.Enter) // Hvis input er enter, så output "Spillet er startet"
+ Console.Clear();
+ ballPosX += ballDX;
+ ballPosY += ballDY;
+ if (ballPosY <= 0 || ballPosY >= laneHeight-1)
  {
-  Console.WriteLine($"{hackerGreen}Spillet er startet");
+  ballDY *= -1;
  }
- else
+ else if (ballPosX >= laneWidth - 1)
  {
-  Console.WriteLine($"{hackerRed}Ugyldig indtastning"); // Hvis ikke, så output ugyldig indtastning og gå tilbage til start
+  ballDX *= -1;
  }
+ else if (ballPosX <= 0)
+ {
+  break;
+ }
+ 
+ Console.SetCursorPosition(ballPosX, ballPosY);
+ Console.Write(ballChar);
+ Console.SetCursorPosition(batPosX, batPosY); //Sæt cursor til battets position
+ for (int i = 0; i < batHeight; i++)
+  {
+   Console.SetCursorPosition(batPosX, batPosY + i);
+   Console.Write(batChar);
+  }
+ ConsoleKey key = Console.ReadKey(true).Key;
+ if(key == ConsoleKey.UpArrow && batPosY > 0) // Rykker battet opad, hvis batPosY er større end toppen af vinduet
+ {
+  batPosY--;
+ }
+ else if(key == ConsoleKey.DownArrow && batPosY + batHeight < laneHeight) // Rykker battet nedad, hvis batPosY + batHeight er mindre end bunden af vinduet
+ {
+  batPosY++;
+ }
+ 
 }
