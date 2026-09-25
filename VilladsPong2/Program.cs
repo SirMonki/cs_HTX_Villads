@@ -4,6 +4,13 @@
  Forfatter: Villads A. S. Kragelund
 */
 
+using System.Diagnostics;
+
+//Lav nye farver ud fra RGB
+String hackerGreen = "\x1b[38;2;0;255;0m";
+String hackerRed = "\x1b[38;2;255;0;0m";
+String reset = "\x1b[0m";
+
 int laneHeight = Console.WindowHeight;
 int laneWidth = Console.WindowWidth;
 int batPosY = Console.WindowHeight/2;
@@ -17,25 +24,40 @@ int ballDY=1;
 int ballDX=1;
 char ballChar = '#';
 
+TimeSpan ballMoveDeltaTime = TimeSpan.FromMilliseconds(100);
+TimeSpan ballNextMoveDeltaTime = ballMoveDeltaTime;
+Stopwatch ballMoveTimer = new Stopwatch(); //Stopur til boldens bevægelse
+ballMoveTimer = Stopwatch.StartNew();
+
 Console.CursorVisible = false;
+
 while (true)
 {
  Console.Clear();
- ballPosX += ballDX;
- ballPosY += ballDY;
- if (ballPosY <= 0 || ballPosY >= laneHeight-1)
+ if (ballMoveTimer.Elapsed >= ballNextMoveDeltaTime) //Hvis der er gået den definerede mængde tid
  {
-  ballDY *= -1;
+  ballNextMoveDeltaTime = ballMoveTimer.Elapsed + ballMoveDeltaTime; // Beregn tid til næste boldbevægelse
+  
+  ballPosX += ballDX;
+  ballPosY += ballDY;
+  
+  if (ballPosY <= 0 || ballPosY >= laneHeight - 1 )
+  {
+   ballDY *= -1;
+  }
+  else if (ballPosX >= laneWidth - 1)
+  {
+   ballDX *= -1;
+  }
+  else if (ballPosX <= 0)
+  {
+   Console.SetCursorPosition(laneWidth/2, laneHeight/2);
+   Console.Write($"{hackerRed}Game Over");
+   Thread.Sleep(3000);
+   break;
+  }
  }
- else if (ballPosX >= laneWidth - 1)
- {
-  ballDX *= -1;
- }
- else if (ballPosX <= 0)
- {
-  break;
- }
- 
+
  Console.SetCursorPosition(ballPosX, ballPosY);
  Console.Write(ballChar);
  Console.SetCursorPosition(batPosX, batPosY); //Sæt cursor til battets position
@@ -44,14 +66,19 @@ while (true)
    Console.SetCursorPosition(batPosX, batPosY + i);
    Console.Write(batChar);
   }
- ConsoleKey key = Console.ReadKey(true).Key;
- if(key == ConsoleKey.UpArrow && batPosY > 0) // Rykker battet opad, hvis batPosY er større end toppen af vinduet
+
+ if (Console.KeyAvailable)
  {
-  batPosY--;
+  ConsoleKey key = Console.ReadKey(true).Key;
+  if (key == ConsoleKey.UpArrow && batPosY > 0) // Rykker battet opad, hvis batPosY er større end toppen af vinduet
+  {
+   batPosY--;
+  }
+  else if
+   (key == ConsoleKey.DownArrow &&
+    batPosY + batHeight < laneHeight) // Rykker battet nedad, hvis batPosY + batHeight er mindre end bunden af vinduet
+  {
+   batPosY++;
+  }
  }
- else if(key == ConsoleKey.DownArrow && batPosY + batHeight < laneHeight) // Rykker battet nedad, hvis batPosY + batHeight er mindre end bunden af vinduet
- {
-  batPosY++;
- }
- 
 }
