@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  Programnavn: Evil Pong
  Programbeskrivelse: En ny version af det klassiske "Pong" fra 1960'erne
  Forfatter: Villads A. S. Kragelund
@@ -24,6 +24,8 @@ int ballDY=1;
 int ballDX=1;
 char ballChar = '#';
 
+int score = 0;
+
 TimeSpan ballMoveDeltaTime = TimeSpan.FromMilliseconds(100);
 TimeSpan ballNextMoveDeltaTime = ballMoveDeltaTime;
 Stopwatch ballMoveTimer = new Stopwatch(); //Stopur til boldens bevægelse
@@ -33,21 +35,32 @@ Console.CursorVisible = false;
 
 while (true)
 {
- Console.Clear();
+ //Ball logic
  if (ballMoveTimer.Elapsed >= ballNextMoveDeltaTime) //Hvis der er gået den definerede mængde tid
  {
   ballNextMoveDeltaTime = ballMoveTimer.Elapsed + ballMoveDeltaTime; // Beregn tid til næste boldbevægelse
-  
+  Console.SetCursorPosition(ballPosX, ballPosY);
+  Console.Write(" ");
   ballPosX += ballDX;
   ballPosY += ballDY;
   
-  if (ballPosY <= 0 || ballPosY >= laneHeight - 1 )
+  if (ballPosY <= 0 || ballPosY >= laneHeight - 1 ) // Hvis bolden rammer toppen eller bunden af banen
   {
    ballDY *= -1;
   }
-  else if (ballPosX >= laneWidth - 1)
+  
+  if (ballPosX >= laneWidth - 1) // hvis bolden rammer højre side af banen
   {
    ballDX *= -1;
+  }
+  else if (ballPosX <= batPosX+1 &&
+           ballPosY >= batPosY &&
+           ballPosY < batPosY + batHeight) // Bolden kan ryge ud af venstre side, på nær hvis den rammer battet
+  {
+   ballDX = 1;
+   ballPosX = batPosX+1;
+   score += 1;
+   Console.Write("score: " + score);
   }
   else if (ballPosX <= 0)
   {
@@ -57,9 +70,10 @@ while (true)
    break;
   }
  }
-
  Console.SetCursorPosition(ballPosX, ballPosY);
  Console.Write(ballChar);
+ 
+ //Bat logic
  Console.SetCursorPosition(batPosX, batPosY); //Sæt cursor til battets position
  for (int i = 0; i < batHeight; i++)
   {
@@ -72,12 +86,22 @@ while (true)
   ConsoleKey key = Console.ReadKey(true).Key;
   if (key == ConsoleKey.UpArrow && batPosY > 0) // Rykker battet opad, hvis batPosY er større end toppen af vinduet
   {
+   for (int i = 0; i < batHeight; i++)
+   {
+    Console.SetCursorPosition(batPosX, batPosY + i);
+    Console.Write(" ");
+   }
    batPosY--;
   }
   else if
    (key == ConsoleKey.DownArrow &&
     batPosY + batHeight < laneHeight) // Rykker battet nedad, hvis batPosY + batHeight er mindre end bunden af vinduet
   {
+   for (int i = 0; i < batHeight; i++)
+   {
+    Console.SetCursorPosition(batPosX, batPosY + i);
+    Console.Write(" ");
+   }
    batPosY++;
   }
  }
