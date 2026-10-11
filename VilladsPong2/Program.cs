@@ -24,8 +24,6 @@ int ballDY=1;
 int ballDX=1;
 char ballChar = '#';
 
-int score = 0;
-
 TimeSpan ballMoveDeltaTime = TimeSpan.FromMilliseconds(100);
 TimeSpan ballNextMoveDeltaTime = ballMoveDeltaTime;
 Stopwatch ballMoveTimer = new Stopwatch(); //Stopur til boldens bevægelse
@@ -59,8 +57,6 @@ while (true)
   {
    ballDX = 1;
    ballPosX = batPosX+1;
-   score += 1;
-   Console.Write("score: " + score);
   }
   else if (ballPosX <= 0)
   {
