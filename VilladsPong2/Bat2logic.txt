@@ -1,0 +1,34 @@
+﻿
+//Bat2 logic
+Console.SetCursorPosition(batPosX2, batPosY2); //Sæt cursor til battets position
+for (int i = 0; i < batHeight2; i++)
+{
+ Console.SetCursorPosition(batPosX2, batPosY2 + i);
+ Console.Write(batChar);
+}
+
+if (Console.KeyAvailable)
+{
+ ConsoleKey key = Console.ReadKey(true).Key;
+ if (key == ConsoleKey.W && batPosY2 > 0) // Rykker battet opad, hvis batPosY er større end toppen af vinduet
+ {
+  for (int i = 0; i < batHeight; i++)
+  {
+   Console.SetCursorPosition(batPosX2, batPosY2 + i);
+   Console.Write(" ");
+  }
+
+  batPosY2--;
+ }
+ else if
+  (key == ConsoleKey.S &&
+   batPosY2 + batHeight2 < laneHeight) // Rykker battet nedad, hvis batPosY + batHeight er mindre end bunden af vinduet
+ {
+  for (int i = 0; i < batHeight2; i++)
+  {
+   Console.SetCursorPosition(batPosX2, batPosY2 + i);
+   Console.Write(" ");
+  }
+  batPosY2++;
+ }
+}
